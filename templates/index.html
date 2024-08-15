@@ -1,10 +1,52 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <title>$Title$</title>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Stock Price Prediction</title>
+    <!-- Link to the external CSS file -->
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body>
-$END$
+
+<div class="container">
+    <h1>Stock Price Prediction</h1>
+
+    <form method="POST">
+        <label for="symbol">Stock Symbol:</label>
+        <input type="text" id="symbol" name="symbol" placeholder="Enter stock symbol (e.g., AAPL)" required>
+
+        <label for="future_date">Future Date:</label>
+        <input type="date" id="future_date" name="future_date" placeholder="Enter future date for prediction">
+
+        <input type="submit" value="Predict">
+    </form>
+
+    {% if error_message %}
+    <div class="message">{{ error_message }}</div>
+    {% endif %}
+
+    {% if future_prediction %}
+    <div class="results">
+        <h2>Prediction for {{ future_date_str }}:</h2>
+        <p>Predicted Stock Price: ₹{{ future_prediction }}</p>
+    </div>
+    {% endif %}
+
+    {% if accuracy_score %}
+    <div class="results">
+        <h2>Prediction Accuracy:</h2>
+        <p>R² Score: {{ accuracy_score }}%</p>
+    </div>
+    {% endif %}
+
+    {% if plot_url %}
+    <div class="plot-container">
+        <h2>Stock Prices: Predicted vs Actual</h2>
+        <img src="{{ plot_url }}" alt="Stock Prices Plot">
+    </div>
+    {% endif %}
+</div>
+
 </body>
 </html>
